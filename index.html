@@ -1,79 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <!-- Lock zoom; use dynamic viewport units for mobile toolbars -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
   <title>OSakhi Agent</title>
   <style>
-    :root {
-      --pad-y: clamp(8px, 2vh, 20px);
-      --pad-x: clamp(12px, 4vw, 32px);
-      --content-max-w: 560px; /* upper bound for large screens */
-    }
-
-    html, body {
+    body {
       margin: 0;
-      height: 100svh;              /* dynamic viewport for mobile */
-      overflow: hidden;            /* disable scrolling */
-      font-family: Verdana, sans-serif;
-      background: #111;
-      color: #fff;
-    }
-
-    /* 2-row grid: header + centered content */
-    .page {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      height: 100%;
-    }
-
-    /* Banner */
-    .header {
+      height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: calc(var(--pad-y) + env(safe-area-inset-top, 0px)) var(--pad-x) var(--pad-y);
-      background: linear-gradient(90deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      align-items: center;
+      background: #111;
+      font-family: Verdana, sans-serif;
+            overflow: hidden; /* 🔒 disable scrolling */
+
     }
 
-    .logo {
-      display: block;
-      max-width: clamp(160px, 32vw, 320px);
-      height: auto;       /* prevent distortion */
-    }
-
-    /* Center the widget area without overlap */
-    .main {
-      display: grid;
-      place-items: center;
-      padding: var(--pad-y) var(--pad-x);
-    }
-
-    /* ElevenLabs widget sizing: fluid, with bounds */
     elevenlabs-convai {
-      width: clamp(300px, 80vw, var(--content-max-w));
-      max-height: min(80svh, 640px);
-      /* If the widget internally sets fixed dimensions, this keeps it from overflowing */
-      box-sizing: border-box;
+      width: 400px;
+      max-width: 90%;
     }
 
-    /* Optional: hide attribution/links to ElevenLabs domain */
-    a[href*="elevenlabs.io"] { display: none !important; }
+.banner{
+  position: absolute;
+  top:0px;
+  left:0px;
+  right:0px;
+  width:100%;
+  color:white;
+  text-align: center;
+}
+
   </style>
 </head>
 <body>
-  <div class="page">
-    <header class="header">
-      <img src="ilogo.png" alt="OSakhi" class="logo" />
-    </header>
-
-    <main class="main">
-      <elevenlabs-convai agent-id="agent_2501k62fffkyejqrg3m314bz1h00"></elevenlabs-convai>
-    </main>
-  </div>
-
+  <h1 class="banner">
+    <img src="ilogo.png"  style="margin:auto;width:300px;">
+  </h1>
+  <elevenlabs-convai agent-id="agent_2501k62fffkyejqrg3m314bz1h00"></elevenlabs-convai>
   <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+  
 </body>
 </html>
