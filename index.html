@@ -2,72 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Lock zoom + use dynamic viewport for mobile toolbars -->
+  <!-- Lock zoom; use dynamic viewport units for mobile toolbars -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
   <title>OSakhi Agent</title>
   <style>
     :root {
-      /* base banner height (approx) so content isn't hidden under it */
-      --banner-height: 64px;
+      --pad-y: clamp(8px, 2vh, 20px);
+      --pad-x: clamp(12px, 4vw, 32px);
+      --content-max-w: 560px; /* upper bound for large screens */
     }
 
     html, body {
       margin: 0;
-      padding: 0;
-      min-height: 100dvh;              /* handles mobile browser UI correctly */
-      overflow: hidden;                 /* 🔒 disable scrolling */
-      background: #111;
+      height: 100svh;              /* dynamic viewport for mobile */
+      overflow: hidden;            /* disable scrolling */
       font-family: Verdana, sans-serif;
+      background: linear-gradient(135deg, #0e0e0e, #1b2a4a 45%, #0e0e0e);
+      color: #fff;
     }
 
-    /* Center the widget */
-    body {
+    /* 2-row grid: header + centered content */
+    .page {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      height: 100%;
+    }
+
+    /* Banner */
+    .header {
       display: flex;
-      justify-content: center;
       align-items: center;
-      /* keep content from hiding under the fixed banner */
-      padding-top: calc(var(--banner-height) + env(safe-area-inset-top, 0px));
-      box-sizing: border-box;
+      justify-content: center;
+      padding: calc(var(--pad-y) + env(safe-area-inset-top, 0px)) var(--pad-x) var(--pad-y);
+      background: linear-gradient(90deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    /* Fixed, always-on-top banner */
-    .banner {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: calc(8px + env(safe-area-inset-top, 0px)) 16px 8px;
-      background: linear-gradient(90deg, rgba(0,0,0,0.5), rgba(0,0,0,0.25));
-      height: var(--banner-height);
-      box-sizing: border-box;
-      margin: 0; /* reset h1 default margin */
-    }
-
-    .banner img {
+    .logo {
       display: block;
-      height: auto;
-      /* Responsive: 300px max, but shrink on small phones */
-      width: min(300px, 60vw);
+      max-width: clamp(160px, 32vw, 320px);
+      height: auto;       /* prevent distortion */
     }
 
-    /* ElevenLabs widget sizing */
-    elevenlabs-convai {
-      width: 400px;
-      max-width: 90vw;
-      max-height: 80vh; /* prevent overflow on very small screens */
+    /* Center the widget area without overlap */
+    .main {
+      display: grid;
+      place-items: center;
+      padding: var(--pad-y) var(--pad-x);
     }
+
+    /* ElevenLabs widget sizing: fluid, with bounds */
+    elevenlabs-convai {
+      width: clamp(300px, 80vw, var(--content-max-w));
+      max-height: min(80svh, 640px);
+      /* If the widget internally sets fixed dimensions, this keeps it from overflowing */
+      box-sizing: border-box;
+    }
+
+    /* Optional: hide attribution/links to ElevenLabs domain */
+    a[href*="elevenlabs.io"] { display: none !important; }
   </style>
 </head>
 <body>
-  <h1 class="banner">
-    <img src="ilogo.png" alt="OSakhi" />
-  </h1>
+  <div class="page">
+    <header class="header">
+      <img src="ilogo.png" alt="OSakhi" class="logo" />
+    </header>
 
-  <elevenlabs-convai agent-id="agent_2501k62fffkyejqrg3m314bz1h00"></elevenlabs-convai>
+    <main class="main">
+      <elevenlabs-convai agent-id="agent_2501k62fffkyejqrg3m314bz1h00"></elevenlabs-convai>
+    </main>
+  </div>
+
   <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 </body>
 </html>
