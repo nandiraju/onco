@@ -1,47 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-
+  <meta charset="UTF-8" />
+  <!-- Lock zoom + use dynamic viewport for mobile toolbars -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
   <title>OSakhi Agent</title>
   <style>
-    body {
+    :root {
+      /* base banner height (approx) so content isn't hidden under it */
+      --banner-height: 64px;
+    }
+
+    html, body {
       margin: 0;
-      height: 100vh;
+      padding: 0;
+      min-height: 100dvh;              /* handles mobile browser UI correctly */
+      overflow: hidden;                 /* 🔒 disable scrolling */
+      background: #111;
+      font-family: Verdana, sans-serif;
+    }
+
+    /* Center the widget */
+    body {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #111;
-      font-family: Verdana, sans-serif;
-            overflow: hidden; /* 🔒 disable scrolling */
-
+      /* keep content from hiding under the fixed banner */
+      padding-top: calc(var(--banner-height) + env(safe-area-inset-top, 0px));
+      box-sizing: border-box;
     }
 
+    /* Fixed, always-on-top banner */
+    .banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: calc(8px + env(safe-area-inset-top, 0px)) 16px 8px;
+      background: linear-gradient(90deg, rgba(0,0,0,0.5), rgba(0,0,0,0.25));
+      height: var(--banner-height);
+      box-sizing: border-box;
+      margin: 0; /* reset h1 default margin */
+    }
+
+    .banner img {
+      display: block;
+      height: auto;
+      /* Responsive: 300px max, but shrink on small phones */
+      width: min(300px, 60vw);
+    }
+
+    /* ElevenLabs widget sizing */
     elevenlabs-convai {
       width: 400px;
-      max-width: 90%;
+      max-width: 90vw;
+      max-height: 80vh; /* prevent overflow on very small screens */
     }
-
-.banner{
-  position: absolute;
-  top:0px;
-  left:0px;
-  right:0px;
-  width:100%;
-  color:white;
-  text-align: center;
-}
-
   </style>
 </head>
 <body>
   <h1 class="banner">
-    <img src="ilogo.png"  style="margin:auto;width:300px;">
+    <img src="ilogo.png" alt="OSakhi" />
   </h1>
+
   <elevenlabs-convai agent-id="agent_2501k62fffkyejqrg3m314bz1h00"></elevenlabs-convai>
   <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
-  
 </body>
 </html>
