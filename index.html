@@ -11,37 +11,65 @@
       margin: 0;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       background: #111;
       font-family: Verdana, sans-serif;
-            overflow: hidden; /* 🔒 disable scrolling */
+      overflow: hidden; /* 🔒 disable scrolling */
+      color: white;
+      text-align: center;
+    }
 
+    .banner {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .banner img {
+      margin: auto;
+      width: min(300px, 70%);
+      height: auto;
+    }
+
+    .intro {
+      margin-top: 80px; /* push below banner */
+      margin-bottom: 20px;
+      list-style: none;
+      padding: 0;
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .intro li::before {
+      content: "• ";
+      color: #00aced; /* accent bullet color */
     }
 
     elevenlabs-convai {
       width: 400px;
       max-width: 90%;
     }
-
-.banner{
-  position: absolute;
-  top:0px;
-  left:0px;
-  right:0px;
-  width:100%;
-  color:white;
-  text-align: center;
-}
-
   </style>
 </head>
 <body>
   <h1 class="banner">
-    <img src="ilogo.png"  style="margin:auto;width:300px;">
+    <img src="ilogo.png" alt="OSakhi Logo">
   </h1>
+
+  <ul class="intro">
+    <li>I am an AI Agent</li>
+    <li>Ask me about Onco Predikt BRS</li>
+    <li>Explore other tests from 1Cell.ai</li>
+    <li>I speak Hindi, Tamil & English</li>
+  </ul>
+
   <elevenlabs-convai agent-id="agent_2501k62fffkyejqrg3m314bz1h00"></elevenlabs-convai>
   <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
-  
 </body>
 </html>
